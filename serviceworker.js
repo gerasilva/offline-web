@@ -1,4 +1,4 @@
-var urls = ['',
+var urls = ['/',
             'css/normalize.css',
             'css/skeleton.css',
             'css/offline-language-english-indicator.css',
