@@ -2,8 +2,8 @@
 <html lang="en">
 <head>  
     <link href="images/favicon.ico" rel="icon">
-    <link rel="stylesheet" href="./css/offline-theme-default-indicator.css">
-    <link rel="stylesheet" href="./css/offline-language-english-indicator.css" />
+    <link rel="stylesheet" href="css/offline-theme-default-indicator.css">
+    <link rel="stylesheet" href="css/offline-language-english-indicator.css" />
         
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/skeleton.css" />
@@ -14,13 +14,22 @@
         
         if('serviceWorker' in navigator){
             navigator.serviceWorker.register("serviceworker.js")
-                    .then(function(registration){
-                    }).catch (function(error){
-                    });
+                .then(function(registration){
+                }).catch (function(error){
+                });
+
+            if(navigator.serviceWorker.controller){
+                window.addEventListener('load', function(){
+                    navigator.serviceWorker.controller.postMessage("what's up!");
+                });
+            }
         }
         
-        var run = function(){
-        Offline.options = { checkOnLoad: true, checks: { xhr: {url: './images/favicon.ico?v=' + Date.now()}}};        
+
+        Offline.options = { checkOnLoad: true, checks: { xhr: {url: './images/favicon.ico?v=' + Date.now()}}};      
+        Offline.check();
+        
+        var run = function(){     
             if(Offline.state === 'up'){
                 Offline.check();
             }
@@ -36,12 +45,11 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="five columns" style="margin-top: 25%">
-                <h4>Wikipedia...</h4>
+            <div class="six columns" style="margin-top: 25%">
+                <h4><img src="images/Wikipedia-logo.png" width="80" height="80"></img> Wikipedia</h4>
                 <p><input type="search"><input type="button" value="search" onclick="search()"></p>
             </div>
-            <div class="seven columns" id="result" style="margin-top: 5%">
-
+            <div class="six columns" id="result" style="margin-top: 5%">
             </div>            
         </div>
     </div>
